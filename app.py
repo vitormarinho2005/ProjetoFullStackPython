@@ -20,6 +20,7 @@ BACKUP_DIR = os.path.join(DATA_DIR, "backup_db")
 PDF_DIR = os.path.join(DATA_DIR, "temp_pdfs")
 os.makedirs(PDF_DIR, exist_ok=True)
 os.makedirs(BACKUP_DIR, exist_ok=True)
+
 # ----------------------------
 # Inicialização segura do banco
 # ----------------------------
@@ -84,7 +85,8 @@ def get_db_connection():
 # ----------------------------
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # Você pode criar um arquivo templates/index.html no futuro
+    return jsonify({"message": "API Flask Render - Sistema Educacional funcionando!"})
 
 @app.route('/processar', methods=['POST'])
 def processar():
@@ -95,12 +97,13 @@ def processar():
     objetivos = request.form['objetivos']
 
     # Gráfico
-    labels = ['Motivação','Desempenho','Objetivos']
-    values = [min(10,len(motivacao)//10), min(10,len(desempenho)//10), min(10,len(objetivos)//10)]
-    plt.figure(figsize=(4,2))
-    plt.bar(labels, values, color=['#0d6efd','#6c757d','#198754'])
+    labels = ['Motivação', 'Desempenho', 'Objetivos']
+    values = [min(10, len(motivacao)//10), min(10, len(desempenho)//10), min(10, len(objetivos)//10)]
+    plt.figure(figsize=(4, 2))
+    plt.bar(labels, values, color=['#0d6efd', '#6c757d', '#198754'])
     img_path = os.path.join(PDF_DIR, f"{uuid.uuid4()}.png")
-    plt.savefig(img_path, bbox_inches='tight'); plt.close()
+    plt.savefig(img_path, bbox_inches='tight')
+    plt.close()
 
     # PDF
     pdf_filename = f"Relatorio_{nome}_{uuid.uuid4().hex}.pdf"
@@ -120,12 +123,15 @@ def processar():
     pdf.drawString(2*cm, height-115, f"Papel: {papel}")
     pdf.drawString(2*cm, height-130, "----------------------------------------")
 
-    y = height-150
+    y = height - 150
     for label, valor in zip(labels, [motivacao, desempenho, objetivos]):
-        pdf.setFont("Helvetica-Bold", 12); pdf.drawString(2*cm, y, f"{label}:")
+        pdf.setFont("Helvetica-Bold", 12)
+        pdf.drawString(2*cm, y, f"{label}:")
         pdf.setFont("Helvetica", 11)
         y -= 15
-        for linha in valor.split("\n"): pdf.drawString(3*cm, y, linha); y -= 15
+        for linha in valor.split("\n"):
+            pdf.drawString(3*cm, y, linha)
+            y -= 15
         y -= 10
 
     pdf.drawImage(img_path, 2*cm, y-150, width=16*cm, height=150)
@@ -167,8 +173,10 @@ def download(filename):
 @app.route('/remover_pdf/<filename>', methods=['DELETE'])
 def remover_pdf(filename):
     pdf_path = os.path.join(PDF_DIR, filename)
-    try: os.remove(pdf_path)
-    except FileNotFoundError: pass
+    try:
+        os.remove(pdf_path)
+    except FileNotFoundError:
+        pass
 
     conn = get_db_connection()
     conn.execute('DELETE FROM respostas WHERE pdf_name = ?', (filename,))
