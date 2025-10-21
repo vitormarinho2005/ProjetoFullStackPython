@@ -121,13 +121,12 @@ body.dark-mode input,
 body.dark-mode textarea,
 body.dark-mode select {
     background-color: var(--input-dark-bg) !important;
-    color: var(--text-light) !important;  /* Texto claro em campos de entrada no modo escuro */
+    color: #fff !important;  /* Texto claro em campos de entrada no modo escuro */
     border: 1px solid var(--input-dark-border) !important;
 }
 
 body.dark-mode #listaHistorico .list-group-item {
     background-color: var(--hist-dark);
-    color: #fff;  /* Texto claro para o histórico no modo escuro */
 }
 
 body.dark-mode #listaHistorico .list-group-item:hover {
