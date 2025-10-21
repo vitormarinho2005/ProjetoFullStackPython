@@ -1,4 +1,6 @@
-/* Geral */
+/* =======================
+   Geral
+======================= */
 body {
     font-family: "Inter", system-ui, sans-serif;
     background: linear-gradient(135deg, #f8f9fa, #eef2f7);
@@ -10,7 +12,7 @@ body {
 .card {
     background-color: #fff;
     border-radius: 1.25rem;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
 }
 
 .card:hover {
@@ -18,16 +20,23 @@ body {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Botões */
+/* Botões primários */
 .btn-primary {
     background: linear-gradient(90deg, #0d6efd, #007bff);
     border: none;
-    transition: transform 0.2s, opacity 0.2s;
+    transition: transform 0.2s, opacity 0.2s, background 0.3s;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
     opacity: 0.9;
+}
+
+/* Inputs e selects */
+input,
+textarea,
+select {
+    transition: background-color 0.3s, color 0.3s, border 0.3s;
 }
 
 /* Histórico */
@@ -49,7 +58,7 @@ body {
     border-radius: 0.75rem;
 }
 
-/* Botão alternância tema */
+/* Botão alternância de tema */
 #toggleTheme {
     z-index: 3000;
     border-radius: 0.75rem;
@@ -61,65 +70,53 @@ body {
     opacity: 0.9;
 }
 
-/* Dark mode automático */
-@media (prefers-color-scheme: dark) {
-    body:not(.light-mode) {
-        background: linear-gradient(135deg, #1c1f24, #2a2e35);
-        color: #f8f9fa;
-    }
-
-    body:not(.light-mode) .card {
-        background-color: #2b3036;
-    }
-
-    body:not(.light-mode) input,
-    textarea,
-    select {
-        background-color: #3a3f46 !important;
-        color: #f8f9fa !important;
-        border: 1px solid #555a60 !important;
-    }
-
-    body:not(.light-mode) #listaHistorico .list-group-item {
-        background-color: #3a3f46;
-        color: #f8f9fa;
-    }
-
-    body:not(.light-mode) #listaHistorico .list-group-item:hover {
-        background-color: #4b525b;
-    }
-
-    body:not(.light-mode) .btn-primary {
-        background: linear-gradient(90deg, #007bff, #3399ff);
-    }
-}
-
-body.dark-mode {
+/* =======================
+   Dark Mode
+======================= */
+body.dark-mode,
+body:not(.light-mode) {
     background: linear-gradient(135deg, #1c1f24, #2a2e35);
     color: #f8f9fa;
 }
 
-body.dark-mode .card {
+body.dark-mode .card,
+body:not(.light-mode) .card {
     background-color: #2b3036;
 }
 
 body.dark-mode input,
 body.dark-mode textarea,
-body.dark-mode select {
+body.dark-mode select,
+body:not(.light-mode) input,
+body:not(.light-mode) textarea,
+body:not(.light-mode) select {
     background-color: #3a3f46 !important;
-    color: #f8f9fa;
+    color: #f8f9fa !important;
     border: 1px solid #555a60 !important;
 }
 
-body.dark-mode #listaHistorico .list-group-item {
+body.dark-mode #listaHistorico .list-group-item,
+body:not(.light-mode) #listaHistorico .list-group-item {
     background-color: #3a3f46;
     color: #f8f9fa;
 }
 
-body.dark-mode #listaHistorico .list-group-item:hover {
+body.dark-mode #listaHistorico .list-group-item:hover,
+body:not(.light-mode) #listaHistorico .list-group-item:hover {
     background-color: #4b525b;
 }
 
-body.dark-mode .btn-primary {
+body.dark-mode .btn-primary,
+body:not(.light-mode) .btn-primary {
     background: linear-gradient(90deg, #007bff, #3399ff);
+}
+
+/* =======================
+   Mídia: Detecta modo escuro do sistema
+======================= */
+@media (prefers-color-scheme: dark) {
+    body:not(.light-mode) {
+        background: linear-gradient(135deg, #1c1f24, #2a2e35);
+        color: #f8f9fa;
+    }
 }
