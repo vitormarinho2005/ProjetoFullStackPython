@@ -1,18 +1,43 @@
 /* =======================
+   Variáveis de cores
+======================= */
+:root {
+    --bg-light: #f8f9fa;
+    --bg-dark: #1c1f24;
+    --card-light: #fff;
+    --card-dark: #2b3036;
+    --text-light: #212529;
+    --text-dark: #f8f9fa;
+    --btn-primary-light: linear-gradient(90deg, #0d6efd, #007bff);
+    --btn-primary-dark: linear-gradient(90deg, #007bff, #3399ff);
+    --hist-light: #f8f9fa;
+    --hist-hover-light: #e9f3ff;
+    --hist-dark: #3a3f46;
+    --hist-hover-dark: #4b525b;
+    --input-light-bg: #fff;
+    --input-dark-bg: #3a3f46;
+    --input-light-border: #ced4da;
+    --input-dark-border: #555a60;
+}
+
+/* =======================
    Geral
 ======================= */
 body {
     font-family: "Inter", system-ui, sans-serif;
-    background: linear-gradient(135deg, #f8f9fa, #eef2f7);
-    color: #212529;
+    background: linear-gradient(135deg, var(--bg-light), #eef2f7);
+    color: var(--text-light);
     transition: background 0.3s, color 0.3s;
+    min-height: 100vh;
+    padding-bottom: 50px;
 }
 
 /* Cards */
 .card {
-    background-color: #fff;
+    background-color: var(--card-light);
     border-radius: 1.25rem;
     transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+    padding: 1.5rem;
 }
 
 .card:hover {
@@ -22,7 +47,7 @@ body {
 
 /* Botões primários */
 .btn-primary {
-    background: linear-gradient(90deg, #0d6efd, #007bff);
+    background: var(--btn-primary-light);
     border: none;
     transition: transform 0.2s, opacity 0.2s, background 0.3s;
 }
@@ -32,30 +57,38 @@ body {
     opacity: 0.9;
 }
 
-/* Inputs e selects */
+/* Inputs, textarea e selects */
 input,
 textarea,
 select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--input-light-border);
+    border-radius: 0.5rem;
+    background-color: var(--input-light-bg);
+    color: var(--text-light);
     transition: background-color 0.3s, color 0.3s, border 0.3s;
 }
 
-/* Histórico */
+/* Histórico de relatórios */
 #listaHistorico .list-group-item {
     border: none;
     border-radius: 0.5rem;
     margin-bottom: 0.5rem;
-    background-color: #f8f9fa;
-    transition: background 0.2s, color 0.2s;
+    background-color: var(--hist-light);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
 }
 
 #listaHistorico .list-group-item:hover {
-    background-color: #e9f3ff;
+    background-color: var(--hist-hover-light);
+    transform: scale(1.01);
 }
 
 /* Toasts */
 .toast {
     font-size: 0.95rem;
     border-radius: 0.75rem;
+    transition: transform 0.2s;
 }
 
 /* Botão alternância de tema */
@@ -63,6 +96,7 @@ select {
     z-index: 3000;
     border-radius: 0.75rem;
     transition: transform 0.2s, background 0.2s;
+    cursor: pointer;
 }
 
 #toggleTheme:hover {
@@ -73,50 +107,68 @@ select {
 /* =======================
    Dark Mode
 ======================= */
-body.dark-mode,
-body:not(.light-mode) {
-    background: linear-gradient(135deg, #1c1f24, #2a2e35);
-    color: #f8f9fa;
+body.dark-mode {
+    background: linear-gradient(135deg, var(--bg-dark), #2a2e35);
+    color: var(--text-dark);
 }
 
-body.dark-mode .card,
-body:not(.light-mode) .card {
-    background-color: #2b3036;
+body.dark-mode .card {
+    background-color: var(--card-dark);
+    color: #fff;  /* Atualizado para texto claro no modo escuro */
 }
 
 body.dark-mode input,
 body.dark-mode textarea,
-body.dark-mode select,
-body:not(.light-mode) input,
-body:not(.light-mode) textarea,
-body:not(.light-mode) select {
-    background-color: #3a3f46 !important;
-    color: #f8f9fa !important;
-    border: 1px solid #555a60 !important;
+body.dark-mode select {
+    background-color: var(--input-dark-bg) !important;
+    color: var(--text-light) !important;  /* Texto claro em campos de entrada no modo escuro */
+    border: 1px solid var(--input-dark-border) !important;
 }
 
-body.dark-mode #listaHistorico .list-group-item,
-body:not(.light-mode) #listaHistorico .list-group-item {
-    background-color: #3a3f46;
-    color: #f8f9fa;
+body.dark-mode #listaHistorico .list-group-item {
+    background-color: var(--hist-dark);
+    color: #fff;  /* Texto claro para o histórico no modo escuro */
 }
 
-body.dark-mode #listaHistorico .list-group-item:hover,
-body:not(.light-mode) #listaHistorico .list-group-item:hover {
-    background-color: #4b525b;
+body.dark-mode #listaHistorico .list-group-item:hover {
+    background-color: var(--hist-hover-dark);
 }
 
-body.dark-mode .btn-primary,
-body:not(.light-mode) .btn-primary {
-    background: linear-gradient(90deg, #007bff, #3399ff);
+body.dark-mode .btn-primary {
+    background: var(--btn-primary-dark);
 }
 
 /* =======================
-   Mídia: Detecta modo escuro do sistema
+   Mídia: Dark Mode automático
 ======================= */
 @media (prefers-color-scheme: dark) {
     body:not(.light-mode) {
-        background: linear-gradient(135deg, #1c1f24, #2a2e35);
-        color: #f8f9fa;
+        background: linear-gradient(135deg, var(--bg-dark), #2a2e35);
+        color: var(--text-dark);
+    }
+}
+
+/* =======================
+   Suavidade adicional para animações
+======================= */
+.card,
+.btn-primary,
+#listaHistorico .list-group-item,
+input,
+textarea,
+select {
+    transition: all 0.3s ease;
+}
+
+/* =======================
+   Responsividade
+======================= */
+@media (max-width: 768px) {
+    .card {
+        padding: 1rem;
+    }
+
+    #listaHistorico .list-group-item {
+        font-size: 0.9rem;
     }
 }
